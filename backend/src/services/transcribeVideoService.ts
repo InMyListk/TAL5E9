@@ -6,18 +6,25 @@ import { SearchApiLoader } from "@langchain/community/document_loaders/web/searc
 dotenv.config();
 
 const api_Key = process.env.SEARCHAPI_APIKEY as string;
-const loader = new SearchApiLoader({
-  apiKey: api_Key,
-  engine: "youtube_transcripts",
-  video_id: "2icg6a5NKBs",
-  lang: "ar",
-});
 
-export const youtubeText = await loader.load();
+export const transcribeVideo = async (url: string) => {
+  const loader = new SearchApiLoader({
+    apiKey: api_Key,
+    engine: "youtube_transcripts",
+    video_id: url,
+    lang: "ar",
+  });
 
-const textSplitter = new TokenTextSplitter({
-  chunkSize: 800,
-  chunkOverlap: 100,
-});
+  const youtubeText = await loader.load();
 
-const splitDocs = await textSplitter.splitDocuments(youtubeText);
+  // TO BE USED LATER !!
+
+  // const textSplitter = new TokenTextSplitter({
+  //   chunkSize: 800,
+  //   chunkOverlap: 100,
+  // });
+
+  // const splitDocs = await textSplitter.splitDocuments(youtubeText);
+
+  return youtubeText;
+};

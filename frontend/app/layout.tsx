@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Cairo } from "next/font/google";
 
+// If loading a variable font, you don't need to specify the font weight
+const Font = Cairo({
+  subsets: ["latin"],
+  display: "swap",
+});
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -25,11 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={Font.className}>{children}</body>
     </html>
   );
 }

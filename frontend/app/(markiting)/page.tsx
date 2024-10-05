@@ -1,15 +1,20 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useFetchData } from "@/hooks/useFetchData";
 import { Link } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
-  const HandleSubmit = (e) => {
+  const { summary, setUrl } = useFetchData();
+
+  const HandleSubmit = (e: any) => {
     e.preventDefault();
     const data = new FormData(e.target);
     const formatedData = Object.fromEntries(data);
-    console.log(formatedData);
+    const url = formatedData.url as string;
+    setUrl(url);
+    console.log(summary);
   };
 
   return (
@@ -39,8 +44,17 @@ export default function Home() {
             className="w-full h-[50px] text-xl font-medium "
             variant={"secondary"}
           >
-            Summarize
+            Summarize لخص
           </Button>
+        </div>
+
+        <div className="flex flex-col items-center gap-y-5 text-end p-5 bg-slate-100 my-10 rounded">
+          {summary.map((info) => (
+            <div>
+              <p className="font-bold text-lg">{info.topic}</p>
+              <p className="">{info.information}</p>
+            </div>
+          ))}
         </div>
       </form>
     </div>
